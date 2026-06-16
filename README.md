@@ -8,6 +8,12 @@ This repository processes long-term climate reanalysis data into seasonal, hourl
 
 Given multi-year hourly wind records covering a geographic region, this script computes the **climatological mean wind field** for each hour of the day across each season, across all 24 hours and all four seasons, producing a structured set of geospatial raster files representing the mean **eastward** (`u10`) and **northward** (`v10`) wind components at 10 metres above surface. Together, these two components fully describe wind speed and direction at any point in the domain.
 
+Typical applications include:
+- Marine route optimisation and environmental modelling
+- Wind energy resource assessment
+- Climate and reanalysis data post-processing
+- GIS-based environmental impact studies
+
 ---
 
 ## 📁 Required Folder Structure
@@ -63,31 +69,38 @@ Then create a folder with that name and place your `.nc` files inside it.
 
 ---
 
+## ⚙️ Environment Setup
+
+This project uses a Conda environment to ensure reproducibility across different machines.
+
+### Step 1 — Create the environment
+
+```bash
+conda create -n windproj python=3.11
+conda activate windproj
+```
+
+### Step 2 — Install dependencies
+
+```bash
+conda install -c conda-forge xarray dask netcdf4 rioxarray rasterio scipy
+```
+
+---
+
 ## 🖥️ How to Run the Script
 
-### Step 1 — Make sure Python is installed
-
-You need **Python 3.8 or later**. To check, open a terminal and run:
+### Step 1 — Activate the environment
 
 ```bash
-python --version
+conda activate windproj
 ```
 
-### Step 2 — Install the required libraries
-
-Run this command once to install all dependencies:
-
-```bash
-pip install xarray rioxarray rasterio netcdf4 scipy
-```
-
-> 💡 If you're using a Mac and run into issues, try `pip3` instead of `pip`.
-
-### Step 3 — Place your data
+### Step 2 — Place your data
 
 Put all your `.nc` wind files inside the `data/` folder.
 
-### Step 4 — Run the script
+### Step 3 — Run the script
 
 From inside your project folder, run:
 
@@ -165,7 +178,8 @@ Each `.tif` file is a **GeoTIFF** — a standard map image format compatible wit
 |--------|----------|
 | `No .nc files found in data folder` | Make sure your `.nc` files are inside the `data/` folder and have the `.nc` extension |
 | `Could not find time coordinate` | Your NetCDF file uses a non-standard time variable name. Open an issue or check the file with a tool like [Panoply](https://www.giss.nasa.gov/tools/panoply/) |
-| `ModuleNotFoundError` | Run `pip install xarray rioxarray rasterio netcdf4 scipy` again |
+| `ModuleNotFoundError` or missing packages | Ensure the environment is activated (`conda activate windproj`) and reinstall dependencies via conda-forge |
+| Dask-related errors | Ensure environment is activated: `conda activate windproj` and reinstall dependencies via conda-forge |
 | Script runs but output is empty | Make sure the files contain `u10` and `v10` variables |
 
 ---
@@ -174,11 +188,35 @@ Each `.tif` file is a **GeoTIFF** — a standard map image format compatible wit
 
 | Library | Purpose |
 |---------|---------|
-| `xarray` | Reading and processing NetCDF climate data |
-| `rioxarray` | Adding geospatial/GIS capabilities to xarray |
-| `rasterio` | Writing GeoTIFF raster files |
-| `netcdf4` | Backend engine for reading `.nc` files |
-| `scipy` | Used internally by xarray for some operations |
+| `xarray` | NetCDF processing |
+| `dask` | Handles multi-file / parallel computation |
+| `netcdf4` | Reads `.nc` climate datasets |
+| `rioxarray` | GIS / raster export |
+| `rasterio` | GeoTIFF writing |
+| `scipy` | Scientific backend utilities |
+
+---
+
+## ⚠️ Important Environment Note
+
+This project must be run inside the Conda environment (`windproj`). Do not use system Python or pip installs outside Conda, as this may cause missing Dask backend errors, NetCDF reading issues, or inconsistent xarray behaviour.
+
+---
+
+## 🔁 Reproducibility
+
+To export the exact environment used in this project for sharing with collaborators:
+
+```bash
+conda env export > environment.yml
+```
+
+To recreate it from that file:
+
+```bash
+conda env create -f environment.yml
+conda activate windproj
+```
 
 ---
 
