@@ -8,12 +8,6 @@ This repository processes long-term climate reanalysis data into seasonal, hourl
 
 Given multi-year hourly wind records covering a geographic region, this script computes the **climatological mean wind field** for each hour of the day across each season, across all 24 hours and all four seasons, producing a structured set of geospatial raster files representing the mean **eastward** (`u10`) and **northward** (`v10`) wind components at 10 metres above surface. Together, these two components fully describe wind speed and direction at any point in the domain.
 
-Typical applications include:
-- Marine route optimisation and environmental modelling
-- Wind energy resource assessment
-- Climate and reanalysis data post-processing
-- GIS-based environmental impact studies
-
 ---
 
 ## 📁 Required Folder Structure
