@@ -1,26 +1,18 @@
-# 🌬️ Wind Climate Raster Exporter
+# Wind Climate Raster Exporter
 
 This repository processes long-term climate reanalysis data into seasonal, hourly wind climatologies for geospatial analysis. It transforms large NetCDF datasets into structured raster outputs to support GIS-based environmental and route modelling in marine contexts.
 
-A Python script that takes years of hourly wind data and turns them into **seasonal wind maps** — one map per hour of the day, per season. The output files can be opened in any GIS software (like QGIS or ArcGIS) to visualize wind patterns across a region.
-
 ---
 
-## 🧭 What Does This Script Actually Do?
+## 📋 What Does This Script Do?
 
-Imagine you have several years of wind measurements recorded every hour, covering a geographic region. This script answers the question:
+Given multi-year hourly wind records covering a geographic region, this script computes the **climatological mean wind field** for each hour of the day across each season, across all 24 hours and all four seasons, producing a structured set of geospatial raster files representing the mean **eastward** (`u10`) and **northward** (`v10`) wind components at 10 metres above surface. Together, these two components fully describe wind speed and direction at any point in the domain.
 
-> *"On a typical summer afternoon at 3 PM, which direction is the wind blowing across this area — and how strong is it?"*
-
-It does this for **every hour of the day** (midnight, 1 AM, 2 AM ... 11 PM) and for **all four seasons** (spring, summer, autumn, winter).
-
-The result is a collection of map files — one per hour per season — that show the wind's **east–west pull** (`u10`) and **north–south pull** (`v10`) averaged across all the years in your dataset. Together, these two components fully describe the wind's speed and direction at any point on the map.
-
-These maps are useful for:
-- Wind energy site assessments
-- Urban planning and ventilation studies
-- Climate research
-- Environmental impact analysis
+Typical applications include:
+- Marine route optimisation and environmental modelling
+- Wind energy resource assessment
+- Climate and reanalysis data post-processing
+- GIS-based environmental impact studies
 
 ---
 
